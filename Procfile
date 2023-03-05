@@ -1,1 +1,0 @@
-web gunicorn skms.wsgi:application --log-file -
