@@ -1,0 +1,88 @@
+{% extends "site-skeleton.html" %}
+
+{% block body %}
+
+<div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+    <div class="row align-items-center">
+    
+      <div class="col-md-8 mb-3 mb-sm-0">
+        <h5>
+          <a href="#" class="text-primary">{{post.title}}</a>
+        </h5>
+        <p class="text-sm"><span class="op-6">Posted </span>{{post.datetime}} <span class="op-6">by</span> <a class="text-black" href="#">{{post.author}}</a></p>
+        <div class="text-sm op-5"> <a class="text-black mr-2" href="#">{{post.content}}</a></div>
+        <div class="text-sm op-5"> <a class="text-black mr-2" href="#">{{post.subject}}</a></div>
+      </div>
+      <div class="col-md-4 op-7">
+        <div class="row text-center op-7">
+          <div class="col px-1"> <i class="ion-connection-bars icon-1x"></i> <span class="d-block text-sm">{{post.likes}} Likes</span> </div>
+          <div class="col px-1"> <i class="ion-ios-chatboxes-outline icon-1x"></i> <span class="d-block text-sm">Comment Count</span> </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="reply-button-div">
+      <a href="#reply" class="btn btn-success" id="reply" onclick="showReply()">Reply</a>
+    </div>
+  </div>
+
+  <div id="reply-div" style="display: none;">
+    <form method="post" action="{% url 'create-comment' post.id %}">
+      {% csrf_token %}
+    
+    <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+      <div class="row align-items-center">
+      
+        <div class="col-md-8 mb-3 mb-sm-0">
+          
+          <div class="op-5"><textarea class="form-control" id="reply-content" name="content"></textarea></div>
+        </div>
+  
+      </div>
+      <div class="submit-button-div">
+        <button type="submit"  class="btn btn-primary" id="createReply">Submit</a>
+      </div>
+    
+    </div>
+  </form>
+  </div>
+{% for comment in post.post_comments.all %}
+  <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+    <div class="row align-items-center">
+    
+      <div class="col-md-8 mb-3 mb-sm-0">
+        <p class="text-sm"><span class="op-6">Posted </span>{{comment.datetime}} <span class="op-6">by</span> <a class="text-black" href="#">{{comment.author}}</a></p>
+        <div class="text-sm op-5"> <a class="text-black mr-2" href="#">{{comment.content}}</a></div>
+      </div>
+      <div class="col-md-4 op-7">
+        <div class="row text-center op-7">
+          <div class="col px-1"> <i class="ion-connection-bars icon-1x"></i> <span class="d-block text-sm">0 Likes</span> </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  {% endfor %}
+
+  {% endblock %}
+
+  
+  {% block script %}
+  
+  <script>
+
+        function showReply(){
+            let hiddenDiv = document.getElementById("reply-div");
+            hiddenDiv.style.display = "block";
+        }
+
+    // $(document).on('click','#reply', function(){
+    //   $('#reply-div').style.display = 'block';
+    // });
+
+    
+
+    
+  </script>
+
+  {% endblock %}

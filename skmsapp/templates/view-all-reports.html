@@ -1,0 +1,25 @@
+{% extends "site-skeleton.html" %}
+
+{% block body %}
+<center>
+<div style="width:50%;">
+<h1 style="color:rgb(8, 2, 2)">Reports by Date</h1>
+<table class="table">
+    <thead class="thead-dark" style="background-color: #14a44d; color: white;">
+      <tr>
+        <th scope="col">Reporter Name</th>
+        <th scope="col">Report Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in post reversed %}
+      <tr>
+        <td><a href="/view-reports/{{user.id}}">{{i.submitter}}</a></td>
+        <td><a href="/view-reports/{{user.id}}">{{i.report_date}}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+

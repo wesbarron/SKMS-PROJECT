@@ -1,0 +1,38 @@
+{% extends 'site-skeleton.html' %}
+
+{% block body %}
+    <center>
+        <div class="container-fluid" style="width:50%;">  
+        <br/><br/>
+        {% if submitted %}
+            Your Voice Was Successfully Submitted.
+            <br/><br/>
+            <form action="/skms/forum/" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-secondary">Back To The Forum</button>
+            </form>
+            <br/>
+            <form action="/skms/voice/">
+                {% csrf_token %}
+                <button class="btn btn-secondary">Submit Another Report</button>
+            </form>
+        {% else %}
+        <h1>Where Can We Improve?</h1>
+        <p><strong><em>This is where employees can share best case practices, new security technologies,<br>
+            new security policies, rules, and other knowledge.</em></strong></p>
+            <form action="" method="POST">
+                {% csrf_token %}
+        
+                {{ form.as_p }}
+                
+                <input type="submit" value="Submit" class="btn btn-success">
+            </form>
+            <br/>
+            <form action="/skms/forum/">
+                {% csrf_token %}
+                <button class="btn btn-warning">Cancel</button>
+            </form>
+        </div>
+        {% endif %}
+    </center>
+{% endblock %}

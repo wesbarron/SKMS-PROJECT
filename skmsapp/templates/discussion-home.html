@@ -1,0 +1,79 @@
+{% extends "site-skeleton.html" %}
+
+{% block body %}
+
+<!-- <hidden name="current_user" style="display:none;">{{ current_user }}</hidden> -->
+   
+   
+<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+
+<div class="container">
+    <div id="discussion-head-div">
+        <h2>Discussion Forum</h2>
+        <div id="instructions-div">
+        </div>
+    </div>
+
+    <div class="create-post-div row">
+        <div class="col">
+            <a class="btn btn-lg btn-block btn-success rounded-0 py-4 mb-3 bg-op-6 roboto-bold" href="/skms/create-post/">Create Post</a>
+
+        </div>
+    </div>
+    <div class="filter-div text-left row mb-5">
+            <div class="filter-by-tag-div col-6 mb-3 mb-sm-0">
+                <div class="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50">
+                <select class="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabindex="-98">
+                  <option> Categories </option>
+                  <option> Learn </option>
+                  <option> Share </option>
+                  <option> Build </option>
+                </select>
+                </div>
+              </div>
+            <div class="sort-div col-6 text-lg-right">
+                <div class="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 ml-auto text-sm w-lg-50">
+                    <select class="form-control form-control-lg bg-white bg-op-9 ml-auto text-sm w-lg-50" data-toggle="select" tabindex="-98">
+                      <option> Filter by </option>
+                      <option> Votes </option>
+                      <option> Replys </option>
+                      <option> Views </option>
+                    </select>
+                </div>
+              </div>
+    </div>
+    <div id="posts-div">
+        <div id="recent-posts-div row">
+            {% if posts %}
+                {% for post in posts %}
+                <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+                    <div class="row align-items-center">
+                      <div class="col-md-8 mb-3 mb-sm-0">
+                        <h5>
+                          <a href="{% url 'post' post.id %}" class="text-primary">{{post.title}}</a>
+                        </h5>
+                        <p class="text-sm"><span class="op-6">Posted </span>{{post.datetime}} <span class="op-6">by</span> <a class="text-black" href="#">{{post.author}}</a></p>
+                        <div class="text-sm op-5"> <a class="text-black mr-2" href="#">{{post.subject}}</a></div>
+                      </div>
+                      <div class="col-md-4 op-7">
+                        <div class="row text-center op-7">
+                          <div class="col px-1"> <i class="ion-connection-bars icon-1x"></i> <span class="d-block text-sm">{{post.likes}} Likes</span> </div>
+                          <div class="col px-1"> <i class="ion-ios-chatboxes-outline icon-1x"></i> <span class="d-block text-sm">Comment Count</span> </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div id="popular-posts-div">
+
+        </div>
+        <div id="filtered-posts-div">
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

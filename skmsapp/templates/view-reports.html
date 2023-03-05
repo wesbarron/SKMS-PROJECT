@@ -1,0 +1,77 @@
+{% extends "site-skeleton.html" %}
+
+{% block body %}
+<center>
+<h1>Risk Committee Report Portal</h1>
+<br /><br />
+<div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0" style="width: 50%;">
+    <div class="row align-items-center">
+    
+      <!-- <div class="col-md-8 mb-3 mb-sm-0"> -->
+      <div>
+        <h5>
+          Reported on {{post.report_date}}
+        </h5>
+        <p class="text-sm"><span class="op-6"><strong>Reported by:</strong></span> <em>{{user.first_name}} {{user.last_name}}</em></p>
+        <div class="text-sm op-5" style="text-align: left;"> {{post.reporter_comments}}</div>
+        <br>
+       </div>
+      <!-- <div class="col-md-4 op-7">
+        <div class="row text-center op-7">
+          <div class="col px-1"> <i class="ion-connection-bars icon-1x"></i> <span class="d-block text-sm">{{post.likes}} Likes</span> </div>
+          <div class="col px-1"> <i class="ion-ios-chatboxes-outline icon-1x"></i> <span class="d-block text-sm">Comment Count</span> </div>
+        </div>
+      </div> -->
+
+    </div>
+    <br>
+    {% if post.contact_preference == "Y" %}
+    <div class="reply-button-div">
+      <a href="#reply" class="btn btn-success" id="reply" onclick="showReply()">Reply</a>
+    </div>
+    {% else %}
+    <h4 style="text-align: center; color: crimson;">Reporter does not wish to be contacted</h4>
+    {% endif %}
+</div>
+
+  <div id="reply-div" style="display: none; width: 50%;">
+    <form method="post" action="{% url 'create-comment' post.id %}">
+      {% csrf_token %}
+    
+    <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+      <div class="row align-items-center">
+      
+        <div class="col-md-8 mb-3 mb-sm-0">
+          
+          <div class="op-5"><textarea class="form-control" id="reply-content" name="content" style="width:152%; height:250px;"></textarea></div>
+        </div>
+  
+      </div>
+      <br />
+      <div class="submit-button-div">
+        <button type="submit"  class="btn btn-primary" id="createReply">Submit</a>
+      </div>
+    
+    </div>
+  </form>
+  </div>
+
+</center>
+{% endblock %}
+  
+  {% block script %}
+  
+  <script>
+
+        function showReply(){
+            let hiddenDiv = document.getElementById("reply-div");
+            hiddenDiv.style.display = "block";
+        }
+
+    // $(document).on('click','#reply', function(){
+    //   $('#reply-div').style.display = 'block';
+    // });
+ 
+  </script>
+
+  {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'site-skeleton.html' %}
+
+{% block body %}
+    <center>
+        <div class="container-fluid" style="width:50%;">  
+        <br/><br/>
+        {% if submitted %}
+            Your Report Was Successfully Submitted.
+            <br/><br/>
+            <form action="{% url 'home' %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-secondary">Back To The Forum</button>
+            </form>
+            <br/>
+            <form action="{% url 'submitReport' %}">
+                {% csrf_token %}
+                <button class="btn btn-secondary">Submit Another Report</button>
+            </form>
+        {% else %}
+        <h1>Report Problems or Issues</h1>
+        <p><strong><em>Please let us know of any problems or issues that you may be experiencing as an employee.<br>
+            Complaints may include but not limited to fraud, waste, abuse, mismanagement, or unlawful activity within the agency.<br>
+            * The Whistleblower Protection Act is strongly enforced for all reports.</em></strong></p>
+            <form action="" method="POST">
+                {% csrf_token %}
+        
+                {{ form.as_p }}
+                
+                <input type="submit" value="Submit" class="btn btn-success">
+            </form>
+            <br/>
+            <form action="{% url 'home' %}">
+                {% csrf_token %}
+                <button class="btn btn-warning">Cancel</button>
+            </form>
+        </div>
+        {% endif %}
+    </center>
+{% endblock %}

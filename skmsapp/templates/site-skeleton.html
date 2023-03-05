@@ -39,8 +39,8 @@
             Admin
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/skms/view-all-reports/">View Reports</a>
-            <a class="dropdown-item" href="/skms/voice/">View Voices</a>
+            <a class="dropdown-item" href="{% url 'viewAllReports' %}">View Reports</a>
+            <a class="dropdown-item" href="{% url 'viewAllReports' %}">View Voices</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -48,8 +48,8 @@
             Actions
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/skms/report/">Reporting</a>
-            <a class="dropdown-item" href="/skms/voice/">Voice</a>
+            <a class="dropdown-item" href="{% url 'submitReport' %}">Reporting</a>
+            <a class="dropdown-item" href="{% url 'submitVoice' %}">Voice</a>
           </div>
         </li>
         <li><a href="/skms/forum/" class="nav-link px-2 link-dark">Forum</a></li>
