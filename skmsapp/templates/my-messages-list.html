@@ -3,7 +3,7 @@
 {% block body %}
 <center>
 <div style="width:50%;">
-<h1 style="color:rgb(8, 2, 2)">Reports by Date</h1>
+<h1 style="color:rgb(8, 2, 2)">Messages by Date</h1>
 <table class="table">
     <thead class="thead-dark" style="background-color: #14a44d; color: white;">
       <tr>
@@ -14,12 +14,13 @@
     <tbody>
     {% for i in post reversed %}
       <tr>
-        <td><a href="/view-reports/{{i.id}}">{{i.submitter}}</a></td>
-        <td><a href="/view-reports/{{i.id}}">{{i.report_date}}</a></td>
+        <td><a href="/my-messages-read/{{i.id}}">{{i.submitter}}</a></td>
+        {% load tz %}
+        <td><a href="/my-messages-read/{{i.id}}">{{i.activity_date|timezone:"America/New_York"}}</a></td>
+        
       </tr>
     {% endfor %}
     </tbody>
   </table>
 </div>
 {% endblock %}
-

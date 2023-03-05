@@ -7,4 +7,5 @@ admin.site.register(models.Report)
 admin.site.register(models.Voice)
 admin.site.register(models.Comment)
 admin.site.register(models.Post)
+admin.site.register(models.ReportReplyToSubmitter)
 

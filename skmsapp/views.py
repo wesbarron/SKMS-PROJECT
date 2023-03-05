@@ -9,6 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import *
+import datetime
 
 
 
@@ -19,7 +20,6 @@ def userProfile(request):
     
     current_user = request.user
     user_profile = request.user.userprofile
-    #account_user = UserAccount.objects.filter(username__exact=current_user).values()
     if current_user.is_authenticated:
         #fs = FileSystemStorage()
         #uploaded_file_url = fs.url(account_user[0]['userimage'])
@@ -101,7 +101,15 @@ def viewReport(request, report_id):
     post = Report.objects.get(id=report_id)
     #user = UserProfile.objects.get(user=request.user.id)
     user = request.user
-    return render(request, "view-reports.html", {'post':post, 'user':user})
+    if request.method == 'POST':
+        content = request.POST["content"]
+        datetime = timezone.now()
+        NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=user, report_reply=content, is_read="N", activity_date=datetime)
+        NewReportReplyToSubmitter.save()
+        messages.success(request, "You're reply has been sent.'.")
+        return redirect("viewAllReports")
+    else:    
+        return render(request, "view-reports.html", {'post':post, 'user':user})
 
 #@login_required
 def viewAllReports(request):
@@ -146,3 +154,28 @@ def post(request, post_id):
 
 def renderCreatePost(request):
     return render(request,"create-post.html")
+
+def submitterReportList(request):
+    post = ReportReplyToSubmitter.objects.values()
+    user = request.user
+    #user_profile = request.user.userprofile
+    if user.is_authenticated:
+            return render(request, "my-messages-list.html", {'post':post, 'user':user})
+    else:
+        messages.success(request, "You must be loged in to access your messages.")
+        return redirect("home")
+            #return render(request, "error.html")
+
+def readMessage(request, message_id):
+    post = ReportReplyToSubmitter.objects.get(id=message_id)
+    user = request.user
+    if request.method == 'POST':
+        is_read = request.POST['mark-read']
+        if is_read == 'Y':
+            post.delete()
+            messages.success(request, "You have successfully deleted the last viewed message.")
+            return redirect("submitterReportList")
+        else:
+            return redirect("submitterReportList")
+    else:        
+        return render(request, "my-messages-read.html", {'post':post, 'user':user})

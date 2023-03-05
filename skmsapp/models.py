@@ -53,3 +53,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.author.username} - {self.content}'
+
+class ReportReplyToSubmitter(models.Model):
+    submitter = models.CharField(max_length=50, null=True)
+    report_reply = models.TextField()
+    reply_date = models.DateTimeField(auto_now_add=True)
+    activity_date = models.DateTimeField(null=True)
+    is_read = models.CharField(max_length=1)
+
+    def __str__(self):
+        return f'{self.submitter} - {self.activity_date}'
