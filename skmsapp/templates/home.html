@@ -1,0 +1,41 @@
+{% extends 'site-skeleton.html' %}
+
+{% block body %}
+
+<center>
+    <h1>Security Knowledge Management System</h1>
+    <br/><br/>
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://tadafur.com/wp-content/uploads/2020/04/821-2.jpg" height="400px" class="d-block w-100" alt="security-image1">
+          </div>
+          <div class="carousel-item">
+            <img src="https://www.dnv.it/Images/Cyber-Security-Standards-and-Risk-552x320_tcm16-102959.jpg" height="400px" class="d-block w-100" alt="security-image1">
+          </div>
+          <div class="carousel-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmXJ2Q7gRkP_E-Ldids51Pxv-apWCApQeHkcefR9vHoC4tPgVNrPUv5GjnBf9J9L8geGM&usqp=CAU" height="400px" class="d-block w-100" alt="security-image1">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+      <br/><br/>
+    <div class="d-grid gap-2">
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}"><button class="btn btn-secondary" style="width:50%;">Logout</button></a>
+    {% else %}
+        <a href="{% url 'login' %}"><button class="btn btn-secondary" style="width:50%;">Login</button></a>
+        <a href="{% url 'register_user' %}"><button class="btn btn-secondary" style="width:50%;">Register</button></a>
+    {% endif %}
+    </div>
+</center>
+
+
+{% endblock %}

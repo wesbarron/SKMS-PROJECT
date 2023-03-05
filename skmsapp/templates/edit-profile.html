@@ -1,0 +1,73 @@
+{% extends "site-skeleton.html" %}
+
+{% block body %}
+<center>
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="login-form">
+        <h1>Edit Profile</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <br><br>
+                <label>First Name:</label>
+                <input class="form-control" type="name" name="firstname" placeholder="First Name" value="{{ user.first_name }}">
+                <br>
+                <label>Last Name:</label>
+                <input class="form-control" type="name" name="lastname" placeholder="Last Name" value="{{ user.last_name }}">
+                <br>
+                <label>Email:</label>
+                <input class="form-control" type="email" name="email" placeholder="Email" value="{{ user.email }}">
+                <br>
+                <label>Username: (Can not be changed)</label>
+                <input class="form-control" type="name" name="username" placeholder="User Name" value="{{ user.username }}" readonly>
+                <br>
+                <label>User Type: (Can not be changed)</label>
+                <input class="form-control" type="name" name="type" placeholder="User Name" value="{{ user.userprofile.type }}" readonly>
+                <br><br>
+                <input class="form-control" id="userimage" type="file" name="userimage" accept="image/*">
+                <br><br>
+                <input class="form-control btn-black" type="submit" name="submit">
+        </form>
+    </div>
+</div>
+{% if messages %}
+<p class="messages">
+    {% for message in messages %}
+    <h2 style="color:red"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h2>
+    {% endfor %}
+</p>
+{% endif %}
+</center>            
+<style>
+
+    .main {
+        padding: 0px 10px;
+    }
+    
+    .login-main-text{
+        margin-top: 20%;
+        padding: 60px;
+        color: #fff;
+    }
+    
+    .login-main-text h2{
+        font-weight: 300;
+    }
+    
+    .btn-black{
+        background-color: #000 !important;
+        color: #fff;
+    }
+    
+    .form-control{
+        width: 40%;
+    }
+
+    .login-form{
+        border: 4px solid black;
+        margin-top: 6%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+    }
+
+{% endblock %}
