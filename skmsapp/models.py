@@ -11,10 +11,10 @@ class UserProfile(models.Model):
 
 class Report(models.Model):
     reporter_comments = models.TextField()
-    reporter_name = models.CharField(max_length=300, choices= (('Current User','Current User'), ('Anonymous','Anonymous')), default='Anonymous')
+    reporter_name = models.CharField(max_length=300, choices= (('Current User','Current User'), ('Anonymous','Anonymous')), default='Current User')
     report_date = models.DateTimeField(auto_now_add=True)
-    contact_preference = models.CharField(max_length = 3, choices= (('N','No'), ('Y','Yes')), default='N')
-    report_anonymously = models.CharField(max_length = 3, choices= (('N','No'), ('Y','Yes')), default='Y')
+    contact_preference = models.CharField(max_length = 3, choices= (('N','No'), ('Y','Yes')), default='Y')
+    report_anonymously = models.CharField(max_length = 3, choices= (('N','No'), ('Y','Yes')), default='N')
     submitter = models.CharField(max_length=50, null=True)
 
     def __str__(self):
@@ -22,10 +22,10 @@ class Report(models.Model):
 
 class Voice(models.Model):
     voice_comments = models.TextField()
-    voice_user = models.CharField(max_length=300, choices= (('Current User','Current User'), ('Anonymous','Anonymous')), default='Anonymous')
+    voice_user = models.CharField(max_length=300, choices= (('Current User','Current User'), ('Anonymous','Anonymous')), default='Current User')
     voice_date = models.DateTimeField(auto_now_add=True)
-    contact_preference = models.CharField(max_length = 3, choices= (('N','No'), ('Y','Yes')), default='N')
-    voice_anonymously = models.CharField(max_length = 3, choices= (('N','No'), ('Y','Yes')), default='Y')
+    contact_preference = models.CharField(max_length = 3, choices= (('N','No'), ('Y','Yes')), default='Y')
+    voice_anonymously = models.CharField(max_length = 3, choices= (('N','No'), ('Y','Yes')), default='N')
     submitter = models.CharField(max_length=50, null=True)
 
     def __str__(self):

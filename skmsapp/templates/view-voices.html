@@ -2,7 +2,7 @@
 
 {% block body %}
 <center>
-<h1>Risk Committee Report Portal</h1>
+<h1>Risk Committee Voice Portal</h1>
 <br /><br />
 <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0" style="width: 50%;">
     <div class="row align-items-center">
@@ -11,10 +11,10 @@
       <div>
         {% load tz %}
         <h5>
-          Reported on {{post.report_date|timezone:"America/New_York"}}
+          Reported on {{post.voice_date|timezone:"America/New_York"}}
         </h5>
         <p class="text-sm"><span class="op-6"><strong>Reported by:</strong></span> <em>{{user.first_name}} {{user.last_name}}</em></p>
-        <div class="text-sm op-5" style="text-align: left;"> {{post.reporter_comments}}</div>
+        <div class="text-sm op-5" style="text-align: left;"> {{post.voice_comments}}</div>
         <br>
        </div>
       <!-- <div class="col-md-4 op-7">
@@ -36,7 +36,7 @@
 </div>
 
   <div id="reply-div" style="display: none; width: 50%;">
-    <form method="post" action="{% url 'viewReports' user.id %}">
+    <form method="post" action="{% url 'viewVoices' user.id %}">
       {% csrf_token %}
     
     <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">

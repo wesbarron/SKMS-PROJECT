@@ -7,12 +7,12 @@
         {% if submitted %}
             Your Voice Was Successfully Submitted.
             <br/><br/>
-            <form action="/skms/forum/" method="POST">
+            <form action="{% url 'home' %}" method="POST">
                 {% csrf_token %}
-                <button class="btn btn-secondary">Back To The Forum</button>
+                <button class="btn btn-secondary">I Am Finished</button>
             </form>
             <br/>
-            <form action="/skms/voice/">
+            <form action="{% url 'submitVoice' %}">
                 {% csrf_token %}
                 <button class="btn btn-secondary">Submit Another Report</button>
             </form>
@@ -25,13 +25,13 @@
         
                 {{ form.as_p }}
                 
-                <input type="submit" value="Submit" class="btn btn-success">
+                <input type="submit" value="Submit" class="btn btn-success" style="float: right">
             </form>
-            <br/>
-            <form action="/skms/forum/">
+            <a href="{% url 'home' %}"><button class="btn btn-warning" style="float: left;">Cancel</button></a>
+            <!-- <form action="/skms/forum/">
                 {% csrf_token %}
                 <button class="btn btn-warning">Cancel</button>
-            </form>
+            </form> -->
         </div>
         {% endif %}
     </center>

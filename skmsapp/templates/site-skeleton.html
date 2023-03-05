@@ -34,15 +34,17 @@
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <!-- Dropdown -->
         <li><a href="{% url 'home' %}" class="nav-link px-2 link-dark">Home</a></li>
+        {% if user.userprofile.type == "RiskManager" %}
         <li class="nav-item dropdown">
           <a class="nav-link px-2 link-dark dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
             Admin
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'viewAllReports' %}">View Reports</a>
-            <a class="dropdown-item" href="{% url 'viewAllReports' %}">View Voices</a>
+            <a class="dropdown-item" href="{% url 'viewAllVoices' %}">View Voices</a>
           </div>
         </li>
+        {% endif %}
         <li class="nav-item dropdown">
           <a class="nav-link px-2 link-dark dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
             Actions

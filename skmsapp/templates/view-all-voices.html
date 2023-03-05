@@ -3,20 +3,20 @@
 {% block body %}
 <center>
 <div style="width:50%;">
-<h1 style="color:rgb(8, 2, 2)">Reports</h1>
+<h1 style="color:rgb(8, 2, 2)">Voices</h1>
 <table class="table">
     <thead class="thead-dark" style="background-color: #14a44d; color: white;">
       <tr>
         <th scope="col">Submitted By</th>
-        <th scope="col">Submission Date</th>
+        <th scope="col">Submittion Date</th>
       </tr>
     </thead>
     <tbody>
     {% for i in post reversed %}
       <tr>
-        <td><a href="/view-reports/{{i.id}}">{{i.submitter}}</a></td>
+        <td><a href="/view-voices/{{i.id}}">{{i.submitter}}</a></td>
         {% load tz %}
-        <td><a href="/view-reports/{{i.id}}">{{i.report_date|timezone:"America/New_York"}}</a></td>
+        <td><a href="/view-voices/{{i.id}}">{{i.voice_date|timezone:"America/New_York"}}</a></td>
       </tr>
     {% endfor %}
     </tbody>

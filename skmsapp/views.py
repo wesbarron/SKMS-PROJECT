@@ -111,18 +111,38 @@ def viewReport(request, report_id):
     else:    
         return render(request, "view-reports.html", {'post':post, 'user':user})
 
-#@login_required
 def viewAllReports(request):
     post = Report.objects.values()
     user = request.user
     user_type = UserProfile.objects.filter(user=user, type="RiskManager").exists()
-    print(user_type)
     if user_type == True:
         return render(request, "view-all-reports.html", {'post':post, 'user':user})
     else:
         messages.success(request, "You must have the Risk Management role to access this.")
         return redirect("home")
-        #return render(request, "error.html")
+
+def viewVoice(request, voice_id):
+    post = Voice.objects.get(id=voice_id)
+    user = request.user
+    if request.method == 'POST':
+        content = request.POST["content"]
+        datetime = timezone.now()
+        NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=user, report_reply=content, is_read="N", activity_date=datetime)
+        NewReportReplyToSubmitter.save()
+        messages.success(request, "You're reply has been sent.'.")
+        return redirect("viewAllReports")
+    else:    
+        return render(request, "view-voices.html", {'post':post, 'user':user})
+
+def viewAllVoices(request):
+    post = Voice.objects.values()
+    user = request.user
+    user_type = UserProfile.objects.filter(user=user, type="RiskManager").exists()
+    if user_type == True:
+        return render(request, "view-all-voices.html", {'post':post, 'user':user})
+    else:
+        messages.success(request, "You must have the Risk Management role to access this.")
+        return redirect("home")
 
 def createComment(request, post_id):
      if request.method == 'POST': 
@@ -135,7 +155,6 @@ def createComment(request, post_id):
         newComment.save()
         return redirect('post', post_id=post_id)
 
-#@login_required
 def createPost(request):
     if request.method == 'POST': 
         title = request.POST['title']
@@ -158,13 +177,11 @@ def renderCreatePost(request):
 def submitterReportList(request):
     post = ReportReplyToSubmitter.objects.values()
     user = request.user
-    #user_profile = request.user.userprofile
     if user.is_authenticated:
             return render(request, "my-messages-list.html", {'post':post, 'user':user})
     else:
         messages.success(request, "You must be loged in to access your messages.")
         return redirect("home")
-            #return render(request, "error.html")
 
 def readMessage(request, message_id):
     post = ReportReplyToSubmitter.objects.get(id=message_id)
