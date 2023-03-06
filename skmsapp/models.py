@@ -35,24 +35,26 @@ class Post(models.Model):
     #likes, comments, title, content, userUploaded, date, time, subject, subscriptions
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey('skmsapp.UserProfile', on_delete=models.CASCADE)
+    #author = models.ForeignKey('skmsapp.UserProfile', on_delete=models.CASCADE)
+    author = models.CharField(max_length=300)
     datetime = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)
-    subject = models.CharField(max_length=100)
+    subject = models.CharField(max_length=100, choices= (('Asset','Asset'), ('Counter Measure','Counter Measure'), ('Threat','Threat'), ('Vulnerability','Vulnerability')))
     subscriptions = models.ManyToManyField('skmsapp.UserProfile', related_name='subscribed_posts')
     comments = models.ManyToManyField('Comment', related_name='post_comments')
     
     def __str__(self):
-        return self.title
+        return self.subject
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments')
-    author = models.ForeignKey('skmsapp.UserProfile', on_delete=models.CASCADE)
+    #author = models.ForeignKey('skmsapp.UserProfile', on_delete=models.CASCADE)
+    author = models.CharField(max_length=300)
     content = models.TextField()
     datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.author.username} - {self.content}'
+        return f'{self.author} - {self.content}'
 
 class ReportReplyToSubmitter(models.Model):
     submitter = models.CharField(max_length=50, null=True)

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Report, Voice
+from .models import Report, Voice, Post
 
 class SubmitReportForm(ModelForm):
     class Meta:
@@ -34,4 +34,19 @@ class SubmitVoiceForm(ModelForm):
             'voice_user': forms.Select(attrs={'class':'form-control text-center'}),
             'contact_preference': forms.Select(attrs={'class':'form-control text-center'}),
             'voice_anonymously': forms.Select(attrs={'class':'form-control text-center'}),
+        }
+
+class SubmitPostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title', 'content', 'subject')
+        labels = {
+            'title': 'Title:',
+            'content': 'Description',
+            'subject': 'Subject (Select One)',
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={'class':'form-control'}),
+            'content': forms.Textarea(attrs={'class':'form-control'}),
+            'subject': forms.Select(attrs={'class':'form-control text-center'}),
         }

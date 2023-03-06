@@ -147,7 +147,7 @@ def viewAllVoices(request):
 def createComment(request, post_id):
      if request.method == 'POST': 
         post = Post.objects.get(id=post_id)
-        author = request.UserAccount
+        author = request.user
         content = request.POST['content']
         datetime = timezone.now()
         
@@ -158,10 +158,10 @@ def createComment(request, post_id):
 def createPost(request):
     if request.method == 'POST': 
         title = request.POST['title']
-        content = request.POST['description'] 
-        author = django.contrib.auth.get_user_model()
+        content = request.POST['content'] 
+        author = request.user
         datetime = timezone.now()
-        subject = "Null Subject"
+        subject = request.POST['subject']
         print(author)
         newPost = Post(title=title, content=content, author=author, datetime=datetime, subject=subject)
         newPost.save()
@@ -172,7 +172,8 @@ def post(request, post_id):
     return render(request, "post.html", {'post':post})
 
 def renderCreatePost(request):
-    return render(request,"create-post.html")
+    form = SubmitPostForm
+    return render(request,"create-post.html", {'form':form})
 
 def submitterReportList(request):
     post = ReportReplyToSubmitter.objects.values()
@@ -196,3 +197,24 @@ def readMessage(request, message_id):
             return redirect("submitterReportList")
     else:        
         return render(request, "my-messages-read.html", {'post':post, 'user':user})
+
+def forum(request):
+    current_user = request.user
+    posts = Post.objects.all()
+    if request.method == 'POST':
+        category = request.POST['category']
+        print(category)
+        result = Post.objects.filter(subject=category).exists()
+        if result == True:
+            #posts = Post.objects.get(subject=category)
+            posts = Post.objects.filter(subject=category).values()
+            return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id, 'posts':posts})
+        else:
+            if category == 'Categories':
+                posts = Post.objects.all()
+                return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id, 'posts':posts})
+            else:
+                posts = Post.objects.all()
+                return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id})    
+    else:
+        return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id, 'posts':posts})
