@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
+from skmsapp.models import UserProfile 
 
 def login_user(request):
     if request.method == "POST":
@@ -30,7 +31,9 @@ def register_user(request):
             form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
+            type = 'User'
             user = authenticate(username=username, password=password)
+            UserProfile.objects.create(user=user, type=type)
             login(request, user)
             messages.success(request, "You have successfully been registered.")
             return redirect('home')

@@ -65,7 +65,11 @@
       <div class="nav-item dropdown text-end">
         <a href="#" class="nav-link px-2 d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="navbardrop" data-toggle="dropdown">
           {% if user.is_authenticated %}
-          <img src="{{ user.userprofile.userimage.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
+            {% if user.userprofile.userimage == "" %}
+              <img src="https://betterwaterquality.com/wp-content/uploads/2020/09/dummy-profile-pic-300x300-1-1.png" alt="mdo" width="32" height="32" class="rounded-circle">
+            {% else %}
+              <img src="{{ user.userprofile.userimage.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
+            {% endif %}
           {% else %}
           <img src="https://betterwaterquality.com/wp-content/uploads/2020/09/dummy-profile-pic-300x300-1-1.png" alt="mdo" width="32" height="32" class="rounded-circle">
           {% endif %}

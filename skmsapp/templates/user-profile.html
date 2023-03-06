@@ -13,8 +13,13 @@
             <div class="card mb-3" style="border-radius: .5rem; height:100%;">
               <div class="row g-0" style="height:100%;">
                 <div class="col-md-4 gradient-custom text-center text-white" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem; background-color: black; height:100%;">
-                  <img src="{{ user.userprofile.userimage.url }}"
-                    alt="Avatar" class="img-fluid my-5" style="height: 50%; border-bottom-left-radius: 50%; border-bottom-right-radius: 50%; border-top-left-radius: 50%; border-top-right-radius: 50%;" />
+                  {% if user.userprofile.userimage == "" %}
+                    <img src="https://betterwaterquality.com/wp-content/uploads/2020/09/dummy-profile-pic-300x300-1-1.png"
+                      alt="Avatar" class="img-fluid my-5" style="height: 50%; border-bottom-left-radius: 50%; border-bottom-right-radius: 50%; border-top-left-radius: 50%; border-top-right-radius: 50%;" />
+                  {% else %}
+                    <img src="{{ user.userprofile.userimage.url }}"
+                      alt="Avatar" class="img-fluid my-5" style="height: 50%; border-bottom-left-radius: 50%; border-bottom-right-radius: 50%; border-top-left-radius: 50%; border-top-right-radius: 50%;" />
+                  {% endif %}
                   <h5><em id="firstname" name="firstname" value="{{ firstname }}">{{ firstname }}</em> <em id="lastname" name="lastname" value="{{ lastname }}">{{ lastname }}</em></h5>
                   <p name="type">{{ type }}</p>
                 </div>

@@ -160,10 +160,10 @@ def createPost(request):
         title = request.POST['title']
         content = request.POST['content'] 
         author = request.user
+        author_type = author.userprofile.type
         datetime = timezone.now()
         subject = request.POST['subject']
-        print(author)
-        newPost = Post(title=title, content=content, author=author, datetime=datetime, subject=subject)
+        newPost = Post(title=title, content=content, author=author, author_type=author_type, datetime=datetime, subject=subject)
         newPost.save()
         return redirect('forum')
 
@@ -203,7 +203,6 @@ def forum(request):
     posts = Post.objects.all()
     if request.method == 'POST':
         category = request.POST['category']
-        print(category)
         result = Post.objects.filter(subject=category).exists()
         if result == True:
             #posts = Post.objects.get(subject=category)

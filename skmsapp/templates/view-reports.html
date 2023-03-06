@@ -28,7 +28,8 @@
     <br>
     {% if post.contact_preference == "Y" %}
     <div class="reply-button-div">
-      <a href="#reply" class="btn btn-success" id="reply" onclick="showReply()">Reply</a>
+      <a href="#reply" class="btn btn-success" id="reply" style="float: right;" onclick="showReply()">Reply</a>
+      <a class="btn btn-secondary" style="float: left;" href="{% url 'viewAllReports' %}">Back</a>
     </div>
     {% else %}
     <h4 style="text-align: center; color: crimson;">Reporter does not wish to be contacted</h4>
@@ -50,7 +51,7 @@
       </div>
       <br />
       <div class="submit-button-div">
-        <button type="submit"  class="btn btn-primary" id="createReply">Submit</a>
+        <button type="submit"  class="btn btn-primary" id="createReply">Submit</button>
       </div>
     
     </div>
