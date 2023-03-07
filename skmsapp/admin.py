@@ -13,5 +13,6 @@ admin.site.register(models.Countermeasure)
 admin.site.register(models.CountermeasureDescription)
 admin.site.register(models.Threat)
 admin.site.register(models.ThreatDescription)
+admin.site.register(models.Vulnerability)
 
 

@@ -1,0 +1,22 @@
+{% extends "site-skeleton.html" %}
+
+{% block body %}
+
+    
+    
+        <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0" style="width:50%; height:650px; margin-left: auto; margin-right: auto; overflow-y:scroll;">
+            {% for item in post %}
+            <div class="row align-items-center">
+              <div class="col-md-8 mb-3 mb-sm-0">
+             
+                  <textarea class="text-primary">{{item.name}}</textarea>
+             
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+        
+    
+  {% endblock %}
+

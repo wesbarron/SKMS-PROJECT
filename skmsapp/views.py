@@ -103,8 +103,9 @@ def viewReport(request, report_id):
     user = request.user
     if request.method == 'POST':
         content = request.POST["content"]
+        contact = Report.objects.filter(id=report_id).values()
         datetime = timezone.now()
-        NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=user, report_reply=content, is_read="N", activity_date=datetime)
+        NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=contact[0]['submitter'], report_reply=content, is_read="N", activity_date=datetime)
         NewReportReplyToSubmitter.save()
         messages.success(request, "You're reply has been sent.'.")
         return redirect("viewAllReports")
@@ -127,7 +128,7 @@ def viewVoice(request, voice_id):
     if request.method == 'POST':
         content = request.POST["content"]
         datetime = timezone.now()
-        NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=user, report_reply=content, is_read="N", activity_date=datetime)
+        NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=post.submitter, report_reply=content, is_read="N", activity_date=datetime)
         NewReportReplyToSubmitter.save()
         messages.success(request, "You're reply has been sent.'.")
         return redirect("viewAllReports")
@@ -176,8 +177,9 @@ def renderCreatePost(request):
     return render(request,"create-post.html", {'form':form})
 
 def submitterReportList(request):
-    post = ReportReplyToSubmitter.objects.values()
     user = request.user
+    post = ReportReplyToSubmitter.objects.filter(submitter=user)
+    print(post)
     if user.is_authenticated:
             return render(request, "my-messages-list.html", {'post':post, 'user':user})
     else:
@@ -217,3 +219,32 @@ def forum(request):
                 return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id})    
     else:
         return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id, 'posts':posts})
+
+def subject(request, subject):
+    if subject == 'Asset':
+        post = Asset.objects.all()
+        return render(request, "subject.html", {'post':post})
+    elif subject == 'Counter Measure':
+        post = Countermeasure.objects.all()
+        return render(request, "subject.html", {'post':post})
+    elif subject == 'Threat':
+        post = Threat.objects.all()
+        return render(request, "subject.html", {'post':post})
+    elif subject == 'Vulnerability':
+        post = Vulnerability.objects.all()
+        return render(request, "subject.html", {'post':post})
+
+def subjectDescription(request, id):
+    if subject == 'Asset':
+        post = Asset.objects.get(id=id)
+        return render(request, "subject-description.html", {'post':post})
+    elif subject == 'Counter Measure':
+        post = Countermeasure.objects.get(id=id)
+        return render(request, "subject-description.html", {'post':post})
+    elif subject == 'Threat':
+        post = Threat.objects.get(id=id)
+        return render(request, "subject-description.html", {'post':post})
+    elif subject == 'Vulnerability':
+        post = Vulnerability.objects.get(id=id)
+        return render(request, "subject-description.html", {'post':post})
+    

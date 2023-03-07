@@ -68,36 +68,43 @@ class ReportReplyToSubmitter(models.Model):
         return f'{self.submitter} - {self.activity_date}'
 
 class Asset(models.Model):
-    assetid = models.AutoField(db_column='AssetID', primary_key=True)  # Field name made lowercase.
-    assetname = models.TextField(db_column='AssetName', unique=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='AssetID', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='AssetName', unique=True)  # Field name made lowercase.
 
     def __str__(self):
-        return self.assetname
+        return self.name
 
 class CountermeasureDescription(models.Model):
     countermeasureid = models.OneToOneField('Countermeasure', models.DO_NOTHING, db_column='CounterMeasureID', primary_key=True)  # Field name made lowercase.
-    countermeasuredescription = models.TextField(db_column='CounterMeasureDescription')  # Field name made lowercase.
+    description = models.TextField(db_column='CounterMeasureDescription')  # Field name made lowercase.
 
     def __str__(self):
-        return self.countermeasuredescription
+        return self.description
 
 class Countermeasure(models.Model):
-    countermeasureid = models.AutoField(db_column='CounterMeasureID', primary_key=True)  # Field name made lowercase.
-    countermeasurename = models.TextField(db_column='CounterMeasureName', unique=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='CounterMeasureID', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='CounterMeasureName', unique=True)  # Field name made lowercase.
 
     def __str__(self):
-        return self.countermeasurename
+        return self.name
 
 class ThreatDescription(models.Model):
     threatid = models.OneToOneField('Threat', models.DO_NOTHING, db_column='ThreatID')  # Field name made lowercase.
-    threatdescription = models.TextField(db_column='ThreatDescription')  # Field name made lowercase.
+    description = models.TextField(db_column='ThreatDescription')  # Field name made lowercase.
 
     def __str__(self):
-        return self.threatdescription
+        return self.description
 
 class Threat(models.Model):
-    threatid = models.AutoField(db_column='ThreatID', primary_key=True)  # Field name made lowercase.
-    threatname = models.TextField(db_column='ThreatName', unique=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='ThreatID', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='ThreatName', unique=True)  # Field name made lowercase.
 
     def __str__(self):
-        return self.threatname
+        return self.name
+
+class Vulnerability(models.Model):
+    id = models.AutoField(db_column='VulnerabilityID', primary_key=True)  # Field name made lowercase.
+    name = models.TextField(db_column='VulnerabilityName', unique=True)  # Field name made lowercase.
+
+    def __str__(self):
+        return self.name

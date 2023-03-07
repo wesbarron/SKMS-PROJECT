@@ -59,7 +59,7 @@
                         </h5>
                         {% load tz %}
                         <p class="text-sm"><span class="op-6">Posted </span>{{post.datetime|timezone:"America/New_York"}} <span class="op-6">by</span> <a class="text-black" href="#">{{post.author}} </a><strong> ({{post.author_type}})</strong></p>
-                        <div class="text-sm op-5"> <a class="text-black mr-2" href="#">{{post.subject}}</a></div>
+                        <div class="text-sm op-5"><a class="btn btn-success" href="{% url 'subject' post.subject %}">{{post.subject}}</a></div>
                       </div>
                       <div class="col-md-4 op-7">
                         <div class="row text-center op-7">
@@ -81,6 +81,7 @@
         </div>
     </div>
 </div>
+
 {% block script %}
 <script>
   function submitForm(){
