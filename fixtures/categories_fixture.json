@@ -1,0 +1,33 @@
+[
+    {
+        "model": "skmsapp.category",
+        "pk": 1,
+        "fields": {
+            "category_name": "Asset"
+        }
+    },
+
+    {
+        "model": "skmsapp.category",
+        "pk": 2,
+        "fields": {
+            "category_name": "Threat"
+        }
+    },
+
+    {
+        "model": "skmsapp.category",
+        "pk": 3,
+        "fields": {
+            "category_name": "Couter Measure"
+        }
+    },
+
+    {
+        "model": "skmsapp.category",
+        "pk": 4,
+        "fields": {
+            "category_name": "Vulnerability"
+        }
+    }
+]

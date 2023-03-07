@@ -65,3 +65,16 @@ class ReportReplyToSubmitter(models.Model):
 
     def __str__(self):
         return f'{self.submitter} - {self.activity_date}'
+    
+class Category(models.Model):
+    category_name = models.CharField(max_length=300, unique=True)
+
+    def __str__(self):
+        return self.category_name
+
+class SecurityTerm(models.Model):
+    security_term_name = models.CharField(max_length=300, unique=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category_terms")
+
+    def __str__(self):
+        return self.category_name

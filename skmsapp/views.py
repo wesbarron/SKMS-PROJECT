@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User  
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -218,3 +218,16 @@ def forum(request):
                 return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id})    
     else:
         return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id, 'posts':posts})
+
+def searchSkms(request):
+    current_user = request.user
+    posts = Post.objects.all()
+    context = {"current_user":current_user, "current_user_id":current_user.id, "posts":posts}
+
+    return render(request, 'search-skms.html', context=context)
+
+def findTerm(request):
+    if request.method == 'GET':
+        security_term = SecurityTerm.objects.get(security_term_name = request.GET["security_term_name"])
+        category = Category.objects.get(pk = security_term.category)
+        return JsonResponse({'security_term_name': security_term.security_term_name, 'category_name': category.category_name})

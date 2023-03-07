@@ -21,6 +21,8 @@ urlpatterns = [
     path('view-all-voices/', views.viewAllVoices, name='viewAllVoices'),
     path('my-messages-list/', views.submitterReportList, name='submitterReportList'),
     path('my-messages-read/<int:message_id>/', views.readMessage, name='readMessages'),
+    path('search-skms/', views.searchSkms, name='search-skms'),
+    path('find-term/', views.findTerm, name='find-term'),
     #path('login', auth_views.LoginView.as_view(template_name='skms/login.html'), name='login'),
     #path('logout', auth_views.LogoutView.as_view(template_name='skms/logout.html'), name='logout'),
 ]

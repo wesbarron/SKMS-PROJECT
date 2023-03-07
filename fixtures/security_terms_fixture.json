@@ -1,0 +1,10 @@
+[
+    {
+        "model": "skmsapp.securityterm",
+        "pk": 1,
+        "fields": {
+            "security_term_name": "Stack",
+            "category": 1
+        }
+    }
+]
