@@ -25,10 +25,10 @@
     <form method="post">
     {% csrf_token %}
         <input name="mark-read" type="hidden" value="Y">
-        <div class="submit-button-div">
+        <!-- <div class="submit-button-div"> -->
             <button type="submit"  class="btn btn-danger" style="float: right;">Delete</button>
-            <a style="color: white;" href="{% url 'submitterReportList' %}"><button class="btn btn-primary" style="float: left;">Back</a>
-        </div>
+            <a style="color: white; float: left;" href="{% url 'submitterReportList' %}" class="btn btn-primary">Back</a>
+        <!-- </div> -->
     </form>
     </div>
 </div>

@@ -15,7 +15,7 @@ import datetime
 
 def home(request):
     return render(request, "home.html")
-
+@login_required
 def userProfile(request):
     
     current_user = request.user
@@ -30,10 +30,13 @@ def userProfile(request):
         messages.success(request, "You need to be logged in to access this page.")
         return redirect("login")
 
+@login_required
 def editProfile(request):
     current_user = request.user
     user_profile = request.user.userprofile
-    context = {"current_user":current_user, "current_user_id":current_user.id, "firstname":current_user.first_name, "lastname":current_user.last_name, "email":current_user.email, "username":current_user, "type":user_profile.type,}
+    image = user_profile.userimage
+    print(image)
+    context = {"current_user":current_user, "current_user_id":current_user.id, "firstname":current_user.first_name, "lastname":current_user.last_name, "email":current_user.email, "username":current_user, "type":user_profile.type,"userimage":image}
     if request.method == 'POST': 
         first_name = request.POST['firstname']
         last_name = request.POST['lastname'] 
@@ -44,14 +47,14 @@ def editProfile(request):
         fs = FileSystemStorage()
         filename = fs.save(userimage.name, userimage)
         uploaded_file_url = fs.url(filename)
-        # context = {"uploaded_file_url":uploaded_file_url,"firstname":first_name, "lastname":last_name, "email":email, "current_user":username, "type":type}
         ins2 = User.objects.filter(username__exact=username).update(first_name=first_name, last_name=last_name, email=email, username=username)
         ins3 = UserProfile.objects.filter(user__exact=current_user.id).update(userimage=userimage)
         messages.success(request, "You're account has been successfully updated.")
         return redirect("userProfile")
-
+       
     return render(request, 'edit-profile.html', context=context)
 
+@login_required
 def submitReport(request):
     submitted = False
     if request.method == 'POST':
@@ -68,12 +71,14 @@ def submitReport(request):
                 obj = form.save(commit=False)
                 obj.submitter = 'Anonymous'
                 obj.save()
+            return HttpResponseRedirect('/report?submitted=True')
     else:
         form = SubmitReportForm
         if 'submitted' in request.GET:
             submitted = True
     return render(request, 'report.html', {'form': form, 'submitted': submitted})
 
+@login_required
 def submitVoice(request):
     submitted = False
     if request.method == 'POST':
@@ -97,6 +102,7 @@ def submitVoice(request):
             submitted = True
     return render(request, 'voice.html', {'form': form, 'submitted': submitted})
 
+@login_required
 def viewReport(request, report_id):
     post = Report.objects.get(id=report_id)
     #user = UserProfile.objects.get(user=request.user.id)
@@ -107,11 +113,12 @@ def viewReport(request, report_id):
         datetime = timezone.now()
         NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=contact[0]['submitter'], report_reply=content, is_read="N", activity_date=datetime)
         NewReportReplyToSubmitter.save()
-        messages.success(request, "You're reply has been sent.'.")
+        messages.success(request, "You're reply has been sent...")
         return redirect("viewAllReports")
     else:    
         return render(request, "view-reports.html", {'post':post, 'user':user})
 
+@login_required
 def viewAllReports(request):
     post = Report.objects.values()
     user = request.user
@@ -122,19 +129,22 @@ def viewAllReports(request):
         messages.success(request, "You must have the Risk Management role to access this.")
         return redirect("home")
 
+@login_required
 def viewVoice(request, voice_id):
     post = Voice.objects.get(id=voice_id)
     user = request.user
     if request.method == 'POST':
         content = request.POST["content"]
+        contact = Report.objects.filter(id=voice_id).values()
         datetime = timezone.now()
-        NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=post.submitter, report_reply=content, is_read="N", activity_date=datetime)
+        NewReportReplyToSubmitter = ReportReplyToSubmitter(submitter=contact[0]['submitter'], report_reply=content, is_read="N", activity_date=datetime)
         NewReportReplyToSubmitter.save()
-        messages.success(request, "You're reply has been sent.'.")
-        return redirect("viewAllReports")
+        messages.success(request, "You're reply has been sent...")
+        return redirect("viewAllVoices")
     else:    
         return render(request, "view-voices.html", {'post':post, 'user':user})
 
+@login_required
 def viewAllVoices(request):
     post = Voice.objects.values()
     user = request.user
@@ -145,6 +155,7 @@ def viewAllVoices(request):
         messages.success(request, "You must have the Risk Management role to access this.")
         return redirect("home")
 
+@login_required
 def createComment(request, post_id):
      if request.method == 'POST': 
         post = Post.objects.get(id=post_id)
@@ -156,6 +167,7 @@ def createComment(request, post_id):
         newComment.save()
         return redirect('post', post_id=post_id)
 
+@login_required
 def createPost(request):
     if request.method == 'POST': 
         title = request.POST['title']
@@ -168,6 +180,7 @@ def createPost(request):
         newPost.save()
         return redirect('forum')
 
+@login_required
 def post(request, post_id):
     post = Post.objects.get(id=post_id)
     return render(request, "post.html", {'post':post})
@@ -176,6 +189,7 @@ def renderCreatePost(request):
     form = SubmitPostForm
     return render(request,"create-post.html", {'form':form})
 
+@login_required
 def submitterReportList(request):
     user = request.user
     post = ReportReplyToSubmitter.objects.filter(submitter=user)
@@ -186,6 +200,7 @@ def submitterReportList(request):
         messages.success(request, "You must be loged in to access your messages.")
         return redirect("home")
 
+@login_required
 def readMessage(request, message_id):
     post = ReportReplyToSubmitter.objects.get(id=message_id)
     user = request.user
@@ -200,6 +215,7 @@ def readMessage(request, message_id):
     else:        
         return render(request, "my-messages-read.html", {'post':post, 'user':user})
 
+@login_required
 def forum(request):
     current_user = request.user
     posts = Post.objects.all()
@@ -220,6 +236,7 @@ def forum(request):
     else:
         return render(request, 'discussion-home.html', {'current_user':current_user, 'current_user_id':current_user.id, 'posts':posts})
 
+@login_required
 def subject(request, subject):
     if subject == 'Asset':
         post = Asset.objects.all()
@@ -234,6 +251,7 @@ def subject(request, subject):
         post = Vulnerability.objects.all()
         return render(request, "subject.html", {'post':post})
 
+@login_required
 def subjectDescription(request, id):
     if subject == 'Asset':
         post = Asset.objects.get(id=id)

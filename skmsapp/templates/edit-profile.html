@@ -24,7 +24,7 @@
                 <label>User Type: (Can not be changed)</label>
                 <input class="form-control" type="name" name="type" placeholder="User Name" value="{{ user.userprofile.type }}" readonly>
                 <br><br>
-                <input class="form-control" id="userimage" type="file" name="userimage" accept="image/*">
+                <input class="form-control" id="userimage" type="file" name="userimage" accept="image/*" value="{{ user.userprofile.userimage }}">
                 <br><br>
                 <input class="form-control btn-black" type="submit" name="submit">
         </form>
