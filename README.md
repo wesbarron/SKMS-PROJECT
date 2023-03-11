@@ -2,6 +2,7 @@
 
 Security Knowledge Management System
 ## To run app use the command below in the terminal after you PIP install the requirements folder
+`pip install -r requirements.txt`
 `python manage.py runserver`
 
 ## Version
