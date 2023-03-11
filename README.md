@@ -1,7 +1,7 @@
 # SKMS-PROJECT
 
 Security Knowledge Management System
-## To run app use the command below in the terminal
+## To run app use the command below in the terminal after you PIP install the requirements folder
 `python manage.py runserver`
 
 ## Version
