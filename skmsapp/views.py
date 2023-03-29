@@ -266,3 +266,5 @@ def subjectDescription(request, id):
         post = Vulnerability.objects.get(id=id)
         return render(request, "subject-description.html", {'post':post})
     
+def dashboard(request):
+    return render(request,"dashboard.html")

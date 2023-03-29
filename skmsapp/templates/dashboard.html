@@ -1,0 +1,85 @@
+{% extends "site-skeleton.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="zero-day-charts row">
+        <div class="desc col-12">
+            <h4>What are Zero-Day Attacks?</h4>
+            <p>The term "Zero-Day" refers to the short amount of time that a corporation has to fix the flaw that led to the attack.
+                The term infers a high level attack that is crucial for the organization to both prevent from happening while also having a plan of action when an attack occurs.
+                Corporations take these attacks very seriously.
+            </p>
+        </div>
+        <div class="col-6">
+            <p>Total Number of Zero-Day Attacks Recorded Over Last 10 Years</p>
+            <canvas id="yearlyZeroDayAttackChart" ></canvas>
+            </div>
+        <div class="col">
+                <p>Type of Zero-Day Attacks</p>
+                <canvas id="zeroDayAttackChart""></canvas>
+    
+            </div>
+    </div>
+</div>
+
+
+{% endblock%}
+
+{%block script%}
+
+   
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const chart1 = document.getElementById('yearlyZeroDayAttackChart');
+  //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
+    new Chart(chart1, {
+      type: 'bar',
+      data: {
+        labels: ['2011', '2012', '2013', '2014', '2015', '2015','2016','2017','2018','2019','2020','2021'],
+        datasets: [{
+          label: '# of Zero Days',
+          data: [28, 25, 41, 34, 34, 35, 34, 40, 31, 29, 38, 66],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  
+<script>
+  const chart2 = document.getElementById('zeroDayAttackChart');
+  //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
+    new Chart(chart2, {
+      type: 'doughnut',
+      data: {
+        labels: [
+    'Memory Corruption',
+    'Logic/Design Flaw',
+    'Information Leak',
+    'User-After-Free',
+    'Other',
+  ],
+  datasets: [{
+    data: [127, 26, 11, 6, 7],
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(96, 145, 77)',
+      'rgb(100, 115, 227)'
+    ],
+    hoverOffset: 4
+  }]
+      },
+      
+    });
+  </script>
+{%endblock%}

@@ -23,6 +23,7 @@ urlpatterns = [
     path('my-messages-read/<int:message_id>/', views.readMessage, name='readMessages'),
     path('subject/<str:subject>/', views.subject, name='subject'),
     path('subject-description/<int:id>/', views.subjectDescription, name='subjectDescription'),
+    path('dashboard/', views.dashboard, name="dashboard")
     #path('login', auth_views.LoginView.as_view(template_name='skms/login.html'), name='login'),
     #path('logout', auth_views.LogoutView.as_view(template_name='skms/logout.html'), name='logout'),
 ]
