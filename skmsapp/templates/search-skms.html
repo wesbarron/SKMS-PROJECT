@@ -1,0 +1,31 @@
+{% extends "site-skeleton.html" %}
+
+{% block body %}
+    <div class="container">
+        <form>
+            <div class="row">
+                <div class="col-10">
+            <input type="text" name="security_term_name" class="form-control"  data-provide="" 
+            placeholder="insert text here " />
+            </div>
+            <div class="col">
+            <a class="btn btn-success rounded-0 roboto-bold form-control" id="find_term_button">Submit</a>
+            </div>
+        </div>
+        </form>
+        <div id="results">
+            
+        </div>
+    </div>
+    {% block script %}
+        <script>
+            document.getElementById('find_term_button').addEventListener("click", async function findTerm(){
+                fetch("https://" + window.location.hostname + "/find-term?" + new URLSearchParams({security_term_name: document.getElementsByName("security_term_name")[0].value}), {method: "GET"})
+                .then(res => res.text())
+                .then(data => {
+                console.log(data);});
+                return false;
+            });
+        </script>
+    {% endblock %}    
+{% endblock %}
