@@ -1,25 +1,111 @@
 {% extends "site-skeleton.html" %}
 
 {% block body %}
-<div class="container">
-    <div class="zero-day-charts row">
-        <div class="desc col-12">
-            <h4>What are Zero-Day Attacks?</h4>
-            <p>The term "Zero-Day" refers to the short amount of time that a corporation has to fix the flaw that led to the attack.
-                The term infers a high level attack that is crucial for the organization to both prevent from happening while also having a plan of action when an attack occurs.
-                Corporations take these attacks very seriously.
-            </p>
-        </div>
-        <div class="col-6">
-            <p>Total Number of Zero-Day Attacks Recorded Over Last 10 Years</p>
-            <canvas id="yearlyZeroDayAttackChart" ></canvas>
-            </div>
-        <div class="col">
-                <p>Type of Zero-Day Attacks</p>
-                <canvas id="zeroDayAttackChart""></canvas>
-    
-            </div>
+<div class="container p-5 d-flex justify-content-center">
+  
+  <div id="DashboardCarousel" class="carousel slide " data-ride="carousel" style="height: 1000px;">
+    <div class="dashboard-header justify-content-center">
+      <h2>Data Security Statistics</h2>
     </div>
+    <ol class="carousel-indicators">
+      <li data-target="#DashboardCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#DashboardCarousel" data-slide-to="1"></li>
+      <li data-target="#DashboardCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner bg-white rounded-5 "  style="height: 750px; width: 1000px;" >
+      <div class="carousel-item p-4 active">
+        <div class="data-security row m-4">
+          <div class="desc justify-content-center">
+            <h4>Cybersecurity</h4>
+            <p>
+              Cybersecurity is a critical issue that affects everyone. As technology continues to advance and more data is stored and processed digitally, 
+              it's essential that we take steps to protect our digital assets from cyber threats. By implementing effective cybersecurity measures, we can 
+              reduce the risk of cyberattacks and protect our sensitive information from unauthorized access. 
+              <br />
+              Cybersecurity is the practice of protecting computer systems, networks, and sensitive information from unauthorized access, theft, damage, or 
+              other malicious attacks. It is important because cyberattacks can result in data breaches, financial losses, reputational damage, and even physical harm. 
+              Effective cybersecurity requires a multi-layered approach that includes both technical and non-technical controls. By implementing effective cybersecurity 
+              measures, we can reduce the risk of cyberattacks and protect our sensitive information from unauthorized access.
+              
+             </p>
+          </div>
+          <div class="stats">
+            <p>In 2022, the total damage by cyberattacks reached $6 trillion. </p>
+            <p>The cybersecurity market is expected to grow to $300 billion by 2024.</p>
+            <p>The US government’s 2019 budget for cybersecurity is $15 billion.</p>
+            <p>Phishing accounts for 37% of all cyberattacks directed toward businesses.</p>
+            <p>More than 90% of successful attacks against businesses originate from phishing.</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item p-4 ">
+        <div class="zero-day-data row justify-content-around m-4">
+          <div class="desc col-12 m-3 p-3">
+              <h4>What are Zero-Day Attacks?</h4>
+              <p>The term "Zero-Day" refers to the short amount of time that a corporation has to fix the flaw that led to the attack.
+                  The term infers a high level attack that is crucial for the organization to both prevent from happening while also having a plan of action when an attack occurs.
+                  Corporations take these attacks very seriously because consequences can be drastic. 
+                  To read more about zero-day attacks and exploitation, read more on <a class="link-info" href="https://usa.kaspersky.com/resource-center/definitions/zero-day-exploit">kasperysky's</a> article on the subject.
+              </p>
+          </div>
+          <div class="col-6">
+              <h5 class="text-center">Total Number of Zero-Day Attacks Recorded Over Last 10 Years</h5>
+              <canvas id="yearlyZeroDayAttackChart" ></canvas>
+              </div>
+          <div class="col">
+                  <h5 class="text-center">Type of Zero-Day Attacks</h5>
+                  <canvas id="zeroDayAttackChart" ></canvas>
+      
+              </div>
+              
+      </div>
+      </div>
+
+      <div class="carousel-item p-4">
+        <div class="ransomware-data row m-4">
+          <div class="desc">
+            <h4>Ransomware</h4>
+            <p>Ransomware Description
+            </p>
+          </div>
+         <div class="col-6">
+          <h5 class="text-center">Industries That Reported Ransom Attacks in 2021 in North America</h5>
+          <canvas id="RansomwareIndustriesChart"></canvas>
+         </div>
+         <div class="col-6">
+          <div>
+            <h5 class="text-center">Cost of Ransomware Attacks</h5>
+          <canvas id="RansomCostByDowntimeChart"></canvas>
+          </div>
+          <div>
+            <canvas id="RansomCostByIncidentChart"></canvas>
+          </div>
+          
+         </div>
+         <div>
+            <p>A ransomware attack happens every 14 seconds.</p>
+            source by: https://dataprot.net/statistics/cyber-security-statistics/
+         </div>
+          
+        </div>
+      </div>
+      
+      
+      
+    </div>
+    <p class="text-small muted">Statistics Provided By <a class="link-info" href="https://purplesec.us/resources/cyber-security-statistics">purplesec</a></p>
+    <a class="carousel-control-next" href="#DashboardCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    <a class="carousel-control-prev" href="#DashboardCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Prev</span>
+    </a>
+  </div>
+  
+    
 </div>
 
 
@@ -50,7 +136,7 @@
             beginAtZero: true
           }
         }
-      }
+      },
     });
   </script>
   
@@ -79,6 +165,102 @@
     hoverOffset: 4
   }]
       },
+
+      options: {
+        responsive: true,
+        radius: "80%",
+      }
+      
+    });
+  </script>
+
+<script>
+  const chart3 = document.getElementById('RansomwareIndustriesChart');
+  //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
+    new Chart(chart3, {
+      type: 'pie',
+      data: {
+        labels: [
+    'Corporations',
+    'Municipality',
+    'Healthcare',
+    'Education',
+    'Infrastructure',
+    'Travel',
+    'Financial',
+  ],
+  datasets: [{
+    data: [40, 16, 13, 13, 11, 4, 3],
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(96, 145, 77)',
+      'rgb(100, 115, 227)',
+      'rgb(100, 115, 227)'
+    ],
+    hoverOffset: 4
+  }]
+      },
+
+      options: {
+        responsive: true,
+        
+      }
+      
+    });
+  </script>
+<script>
+  const chart4 = document.getElementById('RansomCostByDowntimeChart');
+  //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
+    new Chart(chart4, {
+      type: 'line',
+      data: {
+        labels: [
+    '2018',
+    '2019',
+    '2020',
+  ],
+  datasets: [{
+    label: 'Average Cost of Downtime Caused by Ransomware per Incident',
+    data: [46800, 141000, 283000],
+    fill: false,
+    borderColor: 'rgb(75, 192, 192)',
+    tension: 0.1
+  }]
+      },
+
+      options: {
+        responsive: true,
+        
+      }
+      
+    });
+  </script>
+<script>
+  const chart5 = document.getElementById('RansomCostByIncidentChart');
+  //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
+    new Chart(chart5, {
+      type: 'line',
+      data: {
+        labels: [
+    '2018',
+    '2019',
+    '2020',
+  ],
+  datasets: [{
+    label: 'Average Cost of Ransomware per Incident',
+    data: [4300, 5900, 8100],
+    fill: false,
+    borderColor: 'rgb(50, 168, 82)',
+    tension: 0.1
+  }]
+      },
+
+      options: {
+        responsive: true,
+        
+      }
       
     });
   </script>
