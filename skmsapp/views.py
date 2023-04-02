@@ -15,6 +15,7 @@ import datetime
 
 def home(request):
     return render(request, "home.html")
+
 @login_required
 def userProfile(request):
     
@@ -265,4 +266,7 @@ def subjectDescription(request, id):
     elif subject == 'Vulnerability':
         post = Vulnerability.objects.get(id=id)
         return render(request, "subject-description.html", {'post':post})
+
+def dashboard(request):
+    return render(request, "dashboard.html")
     
