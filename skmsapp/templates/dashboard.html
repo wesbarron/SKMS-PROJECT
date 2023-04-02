@@ -1,23 +1,23 @@
 {% extends "site-skeleton.html" %}
 
 {% block body %}
+<style>
+  .carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
+</style>
 <div class="container p-5 d-flex justify-content-center">
   
-  <div id="DashboardCarousel" class="carousel slide " data-ride="carousel" style="height: 1000px;">
-    <div class="dashboard-header justify-content-center">
-      <h2>Data Security Statistics</h2>
-    </div>
-    <ol class="carousel-indicators">
-      <li data-target="#DashboardCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#DashboardCarousel" data-slide-to="1"></li>
-      <li data-target="#DashboardCarousel" data-slide-to="2"></li>
-    </ol>
+  <div id="DashboardCarousel" class="carousel slide " data-ride="carousel" style="height: 1000px;" data-interval="8000">
 
-    <div class="carousel-inner bg-white rounded-5 "  style="height: 750px; width: 1000px;" >
-      <div class="carousel-item p-4 active">
+    <div class="carousel-inner bg-secondary-subtle rounded-5 "  style="height: 800px; width: 1250px;" >
+      <div class="carousel-item px-5 mx-5 py-2 active">
         <div class="data-security row m-4">
-          <div class="desc justify-content-center">
+          
+          <div class="desc col-12">
             <h4>Cybersecurity</h4>
+            
             <p>
               Cybersecurity is a critical issue that affects everyone. As technology continues to advance and more data is stored and processed digitally, 
               it's essential that we take steps to protect our digital assets from cyber threats. By implementing effective cybersecurity measures, we can 
@@ -29,8 +29,19 @@
               measures, we can reduce the risk of cyberattacks and protect our sensitive information from unauthorized access.
               
              </p>
+             
           </div>
-          <div class="stats">
+          <div class="d-flex justify-content-around">
+            <div style="width: 50%;">
+              <h5 class="text-center">Data Breaches from 2018-2022 Grouped by Organization</h5>
+              <canvas id="breachesByOrgChart" ></canvas>
+              </div>
+           <div>
+            <img style="width: 100%;" src="/media/cybersecurity.svg" alt="SVG Image">
+           </div>
+          </div>
+          
+          <div class="stats" hidden>
             <p>In 2022, the total damage by cyberattacks reached $6 trillion. </p>
             <p>The cybersecurity market is expected to grow to $300 billion by 2024.</p>
             <p>The US government’s 2019 budget for cybersecurity is $15 billion.</p>
@@ -39,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="carousel-item p-4 ">
+      <div class="carousel-item px-5 mx-5 py-2">
         <div class="zero-day-data row justify-content-around m-4">
           <div class="desc col-12 m-3 p-3">
               <h4>What are Zero-Day Attacks?</h4>
@@ -62,11 +73,11 @@
       </div>
       </div>
 
-      <div class="carousel-item p-4">
+      <div class="carousel-item px-5 mx-5 py-2">
         <div class="ransomware-data row m-4">
           <div class="desc">
             <h4>Ransomware</h4>
-            <p>Ransomware Description
+            <p><a href="https://dataprot.net/statistics/cyber-security-statistics/" class="text-info">A ransomware attack happens every 14 seconds.</a> 
             </p>
           </div>
          <div class="col-6">
@@ -83,10 +94,6 @@
           </div>
           
          </div>
-         <div>
-            <p>A ransomware attack happens every 14 seconds.</p>
-            source by: https://dataprot.net/statistics/cyber-security-statistics/
-         </div>
           
         </div>
       </div>
@@ -94,7 +101,7 @@
       
       
     </div>
-    <p class="text-small muted">Statistics Provided By <a class="link-info" href="https://purplesec.us/resources/cyber-security-statistics">purplesec</a></p>
+    <p class="small muted">Statistics Provided By <a class="link-info" href="https://purplesec.us/resources/cyber-security-statistics">purplesec</a></p>
     <a class="carousel-control-next" href="#DashboardCarousel" role="button" data-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
@@ -104,7 +111,23 @@
       <span class="sr-only">Prev</span>
     </a>
   </div>
-  
+  <div class="links bg-secondary-subtle border-1 rounded-5 px-4 py-4 mx-5 col-3" style="height: 800px;">
+    <h3>Useful Links</h3>
+    <div>
+      <p></p>
+      <ul>
+        <li><a href="https://www.sans.org/" class="link-primary">SANS Institute</a> - Cybersecurity Training Courses</li>
+        <li><a href="https://www.nist.gov/" class="link-primary">NIST</a> - National Institute of Standards and Technology
+          <ul><li>For online security standards and best practices</li></ul></li>
+        
+        <li><a href="https://www.nsa.gov/Cybersecurity/" class="link-primary">NSA</a> - National Security Agency
+          <ul><li>Resources for Cybersecurity Guidance on Threat Prevention</li></ul></li>
+        <li><a href="https://www.pcisecuritystandards.org/" class="link-primary">PCI DSS</a> - Credit Card Data Standards</li>
+        <li><a href="https://www.hhs.gov/hipaa/index.html" class="link-primary" >HIPAA</a> - Health Insurance Portability and Accountability Act
+          <ul><li>Medical Record Data Protections</li></ul></li>
+      </ul>
+    </div>
+  </div>
     
 </div>
 
@@ -113,15 +136,14 @@
 
 {%block script%}
 
-   
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
-  <script>
+  <script> //Yearly Zero Day Attack Chart (line)
     const chart1 = document.getElementById('yearlyZeroDayAttackChart');
   //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
     new Chart(chart1, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: ['2011', '2012', '2013', '2014', '2015', '2015','2016','2017','2018','2019','2020','2021'],
         datasets: [{
@@ -140,7 +162,7 @@
     });
   </script>
   
-<script>
+<script>//Zero Day Attack Chart (doughnut)
   const chart2 = document.getElementById('zeroDayAttackChart');
   //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
     new Chart(chart2, {
@@ -174,7 +196,7 @@
     });
   </script>
 
-<script>
+<script>//Ransomware Industries Chart (pie)
   const chart3 = document.getElementById('RansomwareIndustriesChart');
   //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
     new Chart(chart3, {
@@ -192,12 +214,13 @@
   datasets: [{
     data: [40, 16, 13, 13, 11, 4, 3],
     backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)',
-      'rgb(96, 145, 77)',
-      'rgb(100, 115, 227)',
-      'rgb(100, 115, 227)'
+      '#9b5fe0',
+      '#16a4d8',
+      '#60dbe8',
+      '#8bd346',
+      '#efdf48',
+      '#f9a52c',
+      '#d64e12'
     ],
     hoverOffset: 4
   }]
@@ -210,7 +233,7 @@
       
     });
   </script>
-<script>
+<script>//Ransom Cost by Downtime Chart (line)
   const chart4 = document.getElementById('RansomCostByDowntimeChart');
   //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
     new Chart(chart4, {
@@ -237,7 +260,7 @@
       
     });
   </script>
-<script>
+<script>//Ransom Cost By Incident Chart (line)
   const chart5 = document.getElementById('RansomCostByIncidentChart');
   //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
     new Chart(chart5, {
@@ -262,6 +285,33 @@
         
       }
       
+    });
+  </script>
+  <script> //Breaches by Organization Chart (bar)
+    const chart6 = document.getElementById('breachesByOrgChart');
+  //https://purplesec.us/resources/cyber-security-statistics/#Cybercrime
+    new Chart(chart6, {
+      type: 'bar',
+      data: {
+        labels: ['Finance, Bank, Insurance', 'Tech, Manufacturing, Comm, Other', 'Retail/Merchant', 'Education', 'Government', 'Healthcare','Nonprofit','Unknown'],
+        datasets: [{
+          backgroundColor: ['#0074D9','#F3722C','#F8961E','#F9C74F','#90BE6D','#43AA8B','#577590','#5D5D5A'],
+          data: [2166, 2147, 764, 654, 266, 3223, 185, 2127],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+          legend:{
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
     });
   </script>
 {%endblock%}
