@@ -268,5 +268,10 @@ def subjectDescription(request, id):
         return render(request, "subject-description.html", {'post':post})
 
 def dashboard(request):
-    return render(request, "dashboard.html")
+    if request.method == 'POST':
+        threat_search = request.POST['threatSearch']
+        print(threat_search)
+        return render(request, "dashboard.html", {'threat_search':threat_search})
+    else:
+        return render(request, "dashboard.html")
     

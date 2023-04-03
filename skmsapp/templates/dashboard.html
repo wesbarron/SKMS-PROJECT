@@ -1,5 +1,111 @@
 {% extends "site-skeleton.html" %}
 
 {% block body %}
+    <!-- <div class="card-text-center m-5">
+        {% csrf_token %}
+        <iframe width="640" height="480"  scrolling="no" frameborder="0" src="http://digitalattackmap.com/embedv2#anim=1&color=0&country=ALL&list=0&time=18763&view=map"></iframe>
+    </div> -->
+    
+    <div class='tableauPlaceholder' id='viz1680525051586' style='position: relative'>
+        <noscript><a href='https:&#47;&#47;privacyrights.org&#47;data-breaches'>
+            <img alt='Key Insights - Breach by Type ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;DataBreachChronologyDashboard&#47;KeyInsights-BreachbyType&#47;1_rss.png' style='border: none' /></a>
+        </noscript>
+        <object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+            <param name='embed_code_version' value='3' /> <param name='site_root' value='' />
+            <param name='name' value='DataBreachChronologyDashboard&#47;KeyInsights-BreachbyType' />
+            <param name='tabs' value='no' /><param name='toolbar' value='yes' />
+            <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;DataBreachChronologyDashboard&#47;KeyInsights-BreachbyType&#47;1.png' /> 
+            <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' />
+            <param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' />
+            <param name='language' value='en-US' /></object></div>                
+            <script type='text/javascript'>                    
+                var divElement = document.getElementById('viz1680525051586');                    
+                var vizElement = divElement.getElementsByTagName('object')[0];                    
+                if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1200px';vizElement.style.height='827px';} 
+                else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1200px';vizElement.style.height='827px';} 
+                else { vizElement.style.width='100%';vizElement.style.height='2027px';}                     
+                var scriptElement = document.createElement('script');                    
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+            </script>
+    </div>
 
+    <div class="card text-center m-5">
+        <div class="card-header">
+            <h2>Threat Activities Report</h2>
+            <form method="POST">
+            {% csrf_token %}
+            <label>Threat Search: </label> <input type="text" id="threatSearch" name="threatSearch" value="{{ threat_search }}" placeholder="Type Threat Here">
+            <input type="submit" value="Search">
+            </form>
+        </div>
+    <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="C:\Users\Wes\Documents\SKMS-PROJECT\skmsapp\templates\dashboard.js"></script>
+
+    <script>
+
+       var sourceLabel = [], scoreLabel = [] 
+        
+       async function vulnerabilityChart() {
+        await getThreatData()
+
+            let ctx = document.getElementById('myChart');
+            new Chart(ctx, {
+            type: 'bar',
+            data: {
+                    labels: sourceLabel,
+                    datasets: [{
+                    label: 'Exploitable Score',
+                    data: scoreLabel,
+                    //borderWidth: 1
+                }]
+            },
+            options: {
+                tooltips: {
+                    mode: 'index'
+                }
+            }
+            }); 
+        }
+        vulnerabilityChart()
+        //Fetch Threat Activities Report
+        async function getThreatData(){ 
+            var searchKey = document.getElementById("threatSearch").value; 
+            console.log(searchKey);
+            const apiUrl = "https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch="+searchKey+"";
+
+            const response = await fetch(apiUrl);
+            const barChartData = await response.json();
+            const count = barChartData.vulnerabilities.length;
+            let score;
+            for (i = 0; i < count; i++){
+            //     //const descriptions = barChartData.vulnerabilities[i].cve.descriptions[0].value
+                try{
+                    score = barChartData.vulnerabilities[i].cve.metrics.cvssMetricV2[0].exploitabilityScore;
+                    
+                    scoreLabel.push(Math.round(score));
+                    
+                    //console.log(Math.round(score))
+                }
+                catch(err){
+                    console.log(err);
+                    scoreLabel.push(1);
+                }
+            }
+            const entity = barChartData.vulnerabilities.map( (x) => x.cve.sourceIdentifier);
+            sourceLabel = entity;
+            //const score = barChartData.vulnerabilities.map( (x) => x.cve.metrics.cvssMetricV2)
+            //console.log(scoreLabel)
+           //console.log(score)
+        }
+
+
+    </script>
+    
+    <style>
+        
+    </style>
 {% endblock %}
